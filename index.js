@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt")
 const express = require('express');
-const pool = require('./databases/database');
+const pool = require('./src/databases/database');
+const mysql_pool= require('./src/databases/mysql_db');
 
 const jwt = require('jsonwebtoken')
 
@@ -12,6 +13,15 @@ const SECRET_KEY = "Ishita_Sercer_KEY";
 
 
 let PORT = 3000;
+
+app.get('/customerdetail', async(req,res)=>{
+    try{
+        const result = await mysql_pool.query("SELECT * FROM customer");
+        res.json(result);
+    }catch(err){
+        res.status(500).json({msg:"Error while connecting to DB"});
+    }
+})
 
 app.get('/', async (req, res) => {
     try {
