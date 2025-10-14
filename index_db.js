@@ -4,9 +4,11 @@ const bcrypt = require("bcrypt")
 const pool = require("./src/databases/mysql_db");
 const jwt = require('jsonwebtoken');
 console.log('env', process.env.JWT_SECRET);
+const cors = require("cors");
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 app.post("/register", async (req, res) => {
     const { username, password } = req.body;
